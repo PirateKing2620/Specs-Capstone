@@ -1,71 +1,84 @@
-from forms import LoginForm
+from forms import LoginForm, RegisterForm
 from customers import customers
+from flask_wtf import FlaskForm
+from wtforms.validators import DataRequired
+from model import User, db, connect_to_db
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask import Flask, render_template, redirect, flash, session, request, url_for
 
-from flask import Flask, render_template, redirect, flash, session, request
+
 app = Flask(__name__)
-
-from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
-import re
-
-
 app.secret_key = 'terraria'
+login_manager = LoginManager()
+login_manager.init_app(app)
 
-@app.route("/login", methods=["GET", "POST"])
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+
+@app.route('/welcome')
+@login_required
+def welcome_user():
+    return render_template('welcome.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash("You logged out!")
+    return redirect(url_for('home'))
+
+
+
+
+@app.route('/login',methods=['GET','POST'])
 def login():
-   """Log user into site."""
-   form = LoginForm(request.form)
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user.check_password(form.password.data) == True:
+            login_user(user)
+            flash('Logged in successfully!')
+            print("Password is correct")
+            return redirect(url_for('home'))
 
-   if form.validate_on_submit():
-      username = form.username.data
-      password = form.password.data
-
-      user = customers.get_by_username(username)
-
-      if not user or user['password'] != password:
-            flash("Invalid username or password")
-            return redirect('/login')
-
-      session["username"] = user['username']
-      flash("Logged in.")
-      return redirect("/base.html")
-
-   return render_template("login.html", form=form)
-
-
-# @app.route("/register", methods=["GET", "POST"])
-# def register():
-#    pass
-
-# db.session.add
-# db.session.commit
-
-@app.route('/register', methods =['GET', 'POST'])
-def register():
-    msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form :
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = % s', (username, ))
-        account = cursor.fetchone()
-        if account:
-            msg = 'Account already exists !'
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-            msg = 'Invalid email address !'
-        elif not re.match(r'[A-Za-z0-9]+', username):
-            msg = 'Username must contain only characters and numbers !'
-        elif not username or not password or not email:
-            msg = 'Please fill out the form !'
         else:
-            cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, % s)', (username, password, email, ))
-            mysql.connection.commit()
-            msg = 'You have successfully registered !'
-    elif request.method == 'POST':
-        msg = 'Please fill out the form !'
-    return render_template('register.html', msg = msg)
+            print("Incorrect password")
+
+            next = request.args.get('next')
+
+            if next == None or not next[0]=='/':
+                next = url_for('home')
+                
+
+            return redirect(next)
+
+    return render_template('login.html',form=form)
+
+
+
+@app.route('/register',methods=['GET','POST'])
+def register():
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    password=form.password.data
+                    )
+        db.session.add(user)
+        db.session.commit()
+        flash("Thanks for registering!")
+        return redirect(url_for('login'))
+    return render_template('register.html',form=form)
+
 
 
 if __name__ == '__main__':

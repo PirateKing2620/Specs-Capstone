@@ -5,35 +5,136 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terraria Capstone Project</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
+
 <body>
-    <h1>Pre-Hardmode Bosses</h1>
-    <h2>King Slime</h2>
-    <h2>Eye of Cthulhu</h2>
-    <h2>Eater of Worlds or Brain of Cthulhu</h2>
-    <h2>Queen Bee</h2>
-    <h2>Skeletron</h2>
-    <h2>Deerclops</h2>
-    <h2>Wall of Flesh</h2>
+   
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+         <ul class='nav'>
+             <button> <il class='nav-link'><a href="{{url_for('home')}}">Home</a> </il> </button>
+             {% if current_user.is_authenticated %}  
+             <button> <li class="nav-link"><a href="{{url_for('boss')}}">Add Task</a> </li> </button>
+             <button> <li class="nav-link"><a href="{{url_for('armor')}}">List Task</a> </li> </button>
+             <button> <li class="nav-link"><a href="{{url_for('weapon')}}">Delete Task</a> </li> </button>
+             <button> <li class="nav-link"><a href="{{url_for('logout')}}">Log Out</a> </li> </button>
+            
+             {% else %} 
+             <button> <li class="nav-link"><a href="{{url_for('login')}}">Log In</a> </li>
+             <button> <li class="nav-link"><a href="{{url_for('register')}}">Register</a> </li>
+
+             {% endif %}  
+          </ul>
+    </nav>
+ </body> 
+
+    {% block body %} 
+
+    {% endblock %}
 
     
+</body>
+
+
+<!-- <body>
+    <h1>Pre-Hardmode Bosses</h1>
+    <br>
+    
+    <h2>King Slime</h2>
+    <h4>Recommended Armor: Wood Armor Set</h4>
+    <h4>Recommended Weapons: Moltov, Enchanted Boomerang, Wood Bow</h4>
+    <br>
+
+    <h2>Eye of Cthulhu</h2>
+    <h4>Recommended Armor: Iron or Lead Armor Set</h4>
+    <h4>Recommended Weapons: Moltov, Enchanted Boomerang, Enchanted Sword, Iron Bow</h4>
+    <br>
+
+    <h2>Eater of Worlds or Brain of Cthulhu</h2>
+    <h4>Recommended Armor: Iron or Lead Armor Set</h4>
+    <h4>Recommended Weapons: Enchanted Sword</h4>
+    <br>
+    
+    <h2>Queen Bee</h2>
+    <h4>Recommended Armor: Iron or Lead Armor Set</h4>
+    <h4>Recommended Weapons: Minishark, Space Gun</h4>
+    <br>
+
+    <h2>Skeletron</h2>
+    <h4>Recommended Armor: Gold or Platinum Armor Set</h4>
+    <h4>Recommended Weapons: Minishark, Space Gun</h4>
+    <br>
+
+    <h2>Deerclops</h2>
+    <h4>Recommended Armor: Gold or Platinum Armor Set</h4>
+    <h4>Recommended Weapons: Moltov, Enchanted Boomerang, Enchanted Sword</h4>
+    <br>
+
+    <h2>Wall of Flesh</h2>
+    <h4>Recommended Armor: Molten Armor Set</h4>
+    <h4>Recommended Weapons: Minishark, Night's Edge, Waterbolt</h4>
+    <br>
+    
     <h1>Hardmode Bosses</h1>
+    <br>
+
     <h2>Queen Slime</h2>
+    <h4>Recommended Armor: Molten Armor Set</h4>
+    <h4>Recommended Weapons: Night's Edge, Minishark</h4>
+    <br>
+
     <h2>The Twins</h2>
+    <h4>Recommended Armor: Mythril or Orichalcum Armor Set</h4>
+    <h4>Recommended Weapons: True Night's Edge, Clockwork Assult Rifle</h4>
+    <br>
+
     <h2>The Destroyer</h2>
+    <h4>Recommended Armor: Mythril or Orichalcum Armor Set</h4>
+    <h4>Recommended Weapons: True Night's Edge</h4>
+    <br>
+
     <h2>Skeletron Prime</h2>
+    <h4>Recommended Armor: Mythril or Orichalcum Armor Set</h4>
+    <h4>Recommended Weapons: True Night's Edge, Megashark</h4>
+    <br>
+
     <h2>Plantera</h2>
+    <h4>Recommended Armor: Titanium or Adamantite Armor Set</h4>
+    <h4>Recommended Weapons: Uzi, Death Sickle</h4>
+    <br>
+
     <h2>Golem</h2>
-    <h2>Duke Fishron</h2>
+    <h4>Recommended Armor: Titanium or Adamantite Armor Set</h4>
+    <h4>Recommended Weapons: Death Sickle, Megashark</h4>
+    <br>
+
     <h2>Empress of Light</h2>
+    <h4>Recommended Armor: Mythril or Orichalcum Armor Set</h4>
+    <h4>Recommended Weapons: Xenopopper, Terra Blade</h4>
+    <br>
+    
+    <h2>Duke Fishron</h2>
+    <h4>Recommended Armor: Hallowed Armor Set</h4>
+    <h4>Recommended Weapons: Xenopopper, Influx Waver, Vampire Knives</h4>
+    <br>
+
     <h2>Lunatic Cultist</h2>
+    <h4>Recommended Armor: Beetle Armor Set</h4>
+    <h4>Recommended Weapons: Vortex Beater, Terra Blade</h4>
+    <br>
+
     <h2>Moon Lord</h2>
+    <h4>Recommended Armor: Solar Flare, Vortex, Nebula, or Stardust Armor Set</h4>
+    <h4>Recommended Weapons: Solar Eruption, Vortex Beater</h4>
+
+
 
     <div>
         {% block body %}
             
         {% endblock %}
-    </div>
+    </div> -->
 
 </body>
 </html>
