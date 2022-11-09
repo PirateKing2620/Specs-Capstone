@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block body %}
-    <form class="regForm" method="post">
+    <form method="post" action="/register">
         {{form.hidden_tag()}}
         {{form.email.label}}{{form.email}}<br>
         {{form.username.label}}{{form.username()}}<br>
         {{form.password.label}}{{form.password()}}<br>
-        {{form.password_confirm.label}}{{form.password_confirm}}<br>
+        {{form.pass_confirm.label}}{{form.pass_confirm}}<br>
         {{form.submit()}}
     </form>
  {% endblock %}   

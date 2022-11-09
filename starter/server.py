@@ -1,5 +1,4 @@
 from forms import LoginForm, RegisterForm
-from customers import customers
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from model import User, db, connect_to_db
@@ -70,7 +69,8 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        user = User(email=form.email.data,
+        user = User(username=form.username.data,
+                    email=form.email.data,
                     password=form.password.data
                     )
         db.session.add(user)

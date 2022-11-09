@@ -1,6 +1,7 @@
 {% extends "base.html" %} 
+{% block title %} Login {% endblock %}
 {% block body %} 
-    <form class="logForm" method="post">
+    <form class="loginForm" method="post">
        {{form.hidden_tag()}}
        {{form.email.label}}{{form.email()}} 
        {{form.password.label}}{{form.password()}}
