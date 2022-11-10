@@ -15,9 +15,9 @@
          <ul class='nav'>
              <button> <il class='nav-link'><a href="{{url_for('home')}}">Home</a> </il> </button>
              {% if current_user.is_authenticated %}  
-             <button> <li class="nav-link"><a href="{{url_for('boss')}}">Add Task</a> </li> </button>
-             <button> <li class="nav-link"><a href="{{url_for('armor')}}">List Task</a> </li> </button>
-             <button> <li class="nav-link"><a href="{{url_for('weapon')}}">Delete Task</a> </li> </button>
+             <button> <li class="nav-link"><a href="{{url_for('boss')}}">Boss List</a> </li> </button>
+             <button> <li class="nav-link"><a href="{{url_for('armor')}}">Armor List</a> </li> </button>
+             <button> <li class="nav-link"><a href="{{url_for('weapon')}}">Weapon List</a> </li> </button>
              <button> <li class="nav-link"><a href="{{url_for('logout')}}">Log Out</a> </li> </button>
             
              {% else %} 

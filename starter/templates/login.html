@@ -2,8 +2,8 @@
 {% block title %} Login {% endblock %}
 {% block body %} 
     <form class="loginForm" method="post">
-       {{form.hidden_tag()}}
-       {{form.email.label}}{{form.email()}} 
+       {{form.csrf_token()}}
+       {{form.username.label}}{{form.username()}} 
        {{form.password.label}}{{form.password()}}
        {{form.submit()}}
     </form>

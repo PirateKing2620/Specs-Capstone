@@ -36,13 +36,27 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route('/boss')
+@login_required
+def boss():
+    return render_template('boss.html')
+
+@app.route('/armor')
+@login_required
+def armor():
+    return render_template('armor.html')
+
+@app.route('/weapon')
+@login_required
+def weapon():
+    return render_template('weapon.html')
 
 
 @app.route('/login',methods=['GET','POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
         if user.check_password(form.password.data) == True:
             login_user(user)
             flash('Logged in successfully!')
@@ -70,7 +84,6 @@ def register():
 
     if form.validate_on_submit():
         user = User(username=form.username.data,
-                    email=form.email.data,
                     password=form.password.data
                     )
         db.session.add(user)
@@ -82,4 +95,5 @@ def register():
 
 
 if __name__ == '__main__':
-	app.run()
+    connect_to_db(app)
+    app.run(debug=True)
